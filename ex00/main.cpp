@@ -4,16 +4,24 @@
 #include <vector>
 #include <iostream>
 
-int main() {
-    std::vector<char> container;
+int main()
+{
 
-    container.push_back(1);
-    container.push_back(2);
-    container.push_back(3);
+	std::vector<int> container;
 
-    easyfind(container, 2); // Encontrado
-    easyfind(container, 5); // No encontrado
+	container.push_back(1);
+	container.push_back(2);
+	container.push_back(3);
 
-    return 0;
+	try
+	{
+		easyfind(container, 2);
+		easyfind(container, 5);
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << "Number not found" <<std::endl;
+	}
+
+	return 0;
 }
-
