@@ -2,45 +2,37 @@
 #define SPAN_HPP
 
 #include <iostream>
-#include <limits.h>
 #include <algorithm>
 #include <exception>
 
 class Span
 {
 public:
-	Span(unsigned int n);
-	Span(const Span &other);
-	Span &operator=(const Span &other);
-	~Span();
+    Span();
+    Span(unsigned int n);
 
-	void addNumber(int start, int end);
-	void addNumber(int i);
-	int shortestSpan();
-	int longestSpan();
+    Span(Span &other);
+
+    void addNumber(int nb);
+    int shortestSpan();
+    int longestSpan();
 
 private:
-	int *_ptr;
-	unsigned _current;
-	const unsigned _size;
-};
+    int *array;
+    unsigned int _size;
+    unsigned int _current;
 
-class SpanFullException : public std::exception
-{
-public:
-	const char *what() const throw()
-	{
-		return "Span is full, cannot add more numbers";
-	}
-};
+    class FullContainer : public std::exception
+    {
+    public:
+        virtual const char *what() const throw();
+    };
 
-class NotEnoughNumbersException : public std::exception
-{
-public:
-	const char *what() const throw()
-	{
-		return "Not enough numbers to find a span";
-	}
+    class NotEnoughNumbers : public std::exception
+    {
+    public:
+        virtual const char *what() const throw();
+    };
 };
 
 #endif

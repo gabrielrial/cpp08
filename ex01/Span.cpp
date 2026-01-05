@@ -1,67 +1,70 @@
 #include "Span.hpp"
 
-Span::Span(unsigned int n) : _size(n)
+Span::Span(unsigned int n)
 {
-	_ptr = new int[n];
+	array = new int[n];
+
+	_size = n;
 	_current = 0;
 }
 
-Span::~Span()
-{
-	delete[] _ptr;
-}
+Span::Span() {}
 
-void Span::addNumber(int i)
+void Span::addNumber(int nb)
 {
-	if (_current == _size)
-		 throw SpanFullException();
-	_ptr[_current] = i;
+	if (_current > _size)
+		throw FullContainer();
+
+	array[_current] = nb;
 	_current++;
-}
-
-void Span::addNumber(int start, int end)
-{
-	for (int i = start; i <= end; i++)
-		addNumber(i);
-}
-
-int Span::longestSpan()
-{
-	if (_current < 2 || _size < 1)
-		throw NotEnoughNumbersException();
-
-	int min = _ptr[0];
-	int max = _ptr[0];
-
-	for (unsigned int i = 0; i < _current; i++)
-	{
-		if (_ptr[i] > max)
-			max = _ptr[i];
-		if (_ptr[i] < min)
-			min = _ptr[i];
-	}
-	return max - min;
 }
 
 int Span::shortestSpan()
 {
-	if (_current < 2 || _size < 1)
-		throw NotEnoughNumbersException();
+	if (_current < 2)
+		throw NotEnoughNumbers();
+	int *cpy = new int(_current);
 
-	int *tmp = new int[_current];
-	for (unsigned i = 0; i < _current; i++)
-		tmp[i] = _ptr[i];
+	for (unsigned int i = 0; i < _current; i++)
+		cpy[i] = array[i];
 
-	std::sort(tmp, tmp + _current);
+	std::sort(cpy, cpy + _current);
 
-	int minSpan = tmp[1] - tmp[0];
-	for (unsigned i = 1; i < _current - 1; i++)
+	int nb;
+	int shortest = -1;
+
+	for (unsigned int i = 0; i < _current - 1; i++)
 	{
-		int span = tmp[i + 1] - tmp[i];
-		if (span < minSpan)
-			minSpan = span;
+		nb = cpy[i];
+		if (cpy[i + 1] - nb < shortest || shortest == -1)
+			shortest = cpy[i + 1] - nb;
 	}
+	delete cpy;
+	return shortest;
+}
 
-	delete[] tmp;
-	return minSpan;
+int Span::longestSpan()
+{
+	if (_current < 2)
+		throw NotEnoughNumbers();
+	int *cpy = new int(_current);
+
+	for (unsigned int i = 0; i < _current; i++)
+		cpy[i] = array[i];
+
+	std::sort(cpy, cpy + _current);
+
+	int longest = cpy[_current - 1] - cpy[0];
+	delete cpy;
+	return longest;
+}
+
+const char *Span::FullContainer::what() const throw()
+{
+	return ("Container is full");
+}
+
+const char *Span::NotEnoughNumbers::what() const throw()
+{
+	return ("Not enough numbers in container");
 }
