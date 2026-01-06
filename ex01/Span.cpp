@@ -19,6 +19,8 @@ void Span::addNumber(int nb)
 	_current++;
 }
 
+
+
 int Span::shortestSpan()
 {
 	if (_current < 2)
@@ -68,3 +70,12 @@ const char *Span::NotEnoughNumbers::what() const throw()
 {
 	return ("Not enough numbers in container");
 }
+
+//void Span::print()
+//{
+//	for (unsigned int i = 0; i < _current; i++)
+//	{
+//		std::cout << array[i] << " ";
+//	}
+//	std::cout << std::endl;
+//}

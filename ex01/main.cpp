@@ -2,7 +2,7 @@
 
 int main()
 {
-    Span sp(4);
+    Span sp(9);
 
     try
     {
@@ -11,6 +11,16 @@ int main()
         sp.addNumber(-100);
         sp.addNumber(-2);
         sp.addNumber(-6);
+
+        std::vector<int> v;
+        v.push_back(10);
+        v.push_back(20);
+        v.push_back(30);
+
+        sp.addNumber(v.begin(), v.end());
+        sp.addNumber(42);
+        sp.addNumber(-7);
+        sp.addNumber(-7);
     }
     catch (const std::exception &e)
     {
@@ -19,4 +29,7 @@ int main()
 
     std::cout << "Shortest: " << sp.shortestSpan() << std::endl;
     std::cout << "Longest:  " << sp.longestSpan() << std::endl;
+    
+
+    // sp.print();
 }
