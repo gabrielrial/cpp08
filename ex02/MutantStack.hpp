@@ -1,7 +1,7 @@
 #ifndef MUTANTSTACK_HPP
 #define MUTANTSTACK_HPP
 
-#include <list>
+#include <stack>
 #include <iostream>
 
 template <typename T>

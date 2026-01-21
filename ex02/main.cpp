@@ -1,6 +1,6 @@
 #include "MutantStack.hpp"
 
-#include <list>
+#include <stack>
 
 int main()
 {
@@ -8,12 +8,12 @@ int main()
 	mstack.push(5);
 	mstack.push(17);
 
-	// MutantStack<int> mstack(mstack1);
 	std::cout << mstack.top() << std::endl;
 	mstack.pop();
-	std::cout << mstack.size() << std::endl;
+	std::cout << "Size: "<< mstack.size() << std::endl;
 	mstack.push(3);
 	mstack.push(5);
+	std::cout << "Size: "<< mstack.size() << std::endl;
 	mstack.push(737);
 	mstack.push(0);
 	MutantStack<int>::iterator it = mstack.begin();
@@ -25,6 +25,23 @@ int main()
 		std::cout << *it << std::endl;
 		++it;
 	}
-	std::stack<int> s(mstack);
+	MutantStack<int> s(mstack);
+	std::cout << "=============================="<< mstack.size() << std::endl;
+	MutantStack<int>::iterator its = s.begin();
+	MutantStack<int>::iterator ites = s.end();
+	while (it != ite)
+	{
+		std::cout << *it << std::endl;
+		++it;
+	}
+	MutantStack<int> s = mstack;
+	std::cout << "=============================="<< mstack.size() << std::endl;
+	MutantStack<int>::iterator its = s.begin();
+	MutantStack<int>::iterator ites = s.end();
+	while (it != ite)
+	{
+		std::cout << *it << std::endl;
+		++it;
+	}
 	return 0;
 }

@@ -8,24 +8,56 @@ Span::Span(unsigned int n)
 	_current = 0;
 }
 
-Span::Span() {}
+Span::Span(const Span &other)
+{
+	_size = other._size;
+	_current = other._current;
+	array = new int[_size];
+
+	for (unsigned int i = 0; i < _current; i++)
+		array[i] = other.array[i];
+}
+
+Span &Span::operator=(const Span &other)
+{
+	if (this != &other)
+	{
+		delete[] array;
+		_size = other._size;
+		_current = other._current;
+		array = new int[_size];
+
+		for (unsigned int i = 0; i < _current; i++)
+			array[i] = other.array[i];
+	}
+	return *this;
+}
+
+Span::~Span() {
+	delete[] array;
+}
 
 void Span::addNumber(int nb)
 {
-	if (_current > _size)
+	if (_size == 0)
+		throw EmptySpan();
+	if (_current >= _size)
+	{
+		std::cout << "Value: "<< nb << " is not stored:" << std::endl;
 		throw FullContainer();
+	}
+	std::cout << "Value:	"<< nb << " was added" << std::endl;
 
 	array[_current] = nb;
 	_current++;
 }
 
 
-
 int Span::shortestSpan()
 {
 	if (_current < 2)
 		throw NotEnoughNumbers();
-	int *cpy = new int(_current);
+	int *cpy = new int[_current]; 
 
 	for (unsigned int i = 0; i < _current; i++)
 		cpy[i] = array[i];
@@ -41,7 +73,7 @@ int Span::shortestSpan()
 		if (cpy[i + 1] - nb < shortest || shortest == -1)
 			shortest = cpy[i + 1] - nb;
 	}
-	delete cpy;
+	delete[] cpy;
 	return shortest;
 }
 
@@ -49,7 +81,7 @@ int Span::longestSpan()
 {
 	if (_current < 2)
 		throw NotEnoughNumbers();
-	int *cpy = new int(_current);
+	int *cpy = new int[_current]; ;
 
 	for (unsigned int i = 0; i < _current; i++)
 		cpy[i] = array[i];
@@ -57,19 +89,25 @@ int Span::longestSpan()
 	std::sort(cpy, cpy + _current);
 
 	int longest = cpy[_current - 1] - cpy[0];
-	delete cpy;
+	delete[] cpy;
 	return longest;
 }
 
 const char *Span::FullContainer::what() const throw()
 {
-	return ("Container is full");
+	return ("Container is full.");
 }
 
 const char *Span::NotEnoughNumbers::what() const throw()
 {
-	return ("Not enough numbers in container");
+	return ("Not enough numbers in container.");
 }
+
+const char *Span::EmptySpan::what() const throw()
+{
+	return ("No space was assigned.");
+}
+
 
 //void Span::print()
 //{

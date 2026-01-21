@@ -11,12 +11,12 @@ int main()
 
 	container.push_back(1);
 	container.push_back(2);
-	container.push_back(3);
+	container.push_back(4);
 
 	try
 	{
 		easyfind(container, 2);
-		easyfind(container, 5);
+		easyfind(container, 3);
 	}
 	catch (const std::exception &e)
 	{

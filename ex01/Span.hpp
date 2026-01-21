@@ -7,18 +7,20 @@
 #include <iterator>
 #include <vector>
 
-
 class Span
 {
 public:
     Span();
     Span(unsigned int n);
 
-    Span(Span &other);
+    Span(const Span &other);
+    Span &operator=(Span const &other);
+    ~Span();
 
     void addNumber(int nb);
-    template <typename Iterator>
-    void addNumber(Iterator begin, Iterator end);
+
+    template <typename iterator>
+    void addNumber(iterator begin, iterator end);
     int shortestSpan();
     int longestSpan();
 
@@ -40,6 +42,11 @@ private:
     public:
         virtual const char *what() const throw();
     };
+    class EmptySpan : public std::exception
+    {
+    public:
+        virtual const char *what() const throw();
+    };
 };
 
 template <typename Iterator>
@@ -52,8 +59,7 @@ void Span::addNumber(Iterator begin, Iterator end)
 	{
 		if (_current >= _size)
 			throw FullContainer();
-		array[_current] = *begin;
-		_current++;
+        addNumber(*begin);
 	}
 }
 
