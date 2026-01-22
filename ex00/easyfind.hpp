@@ -16,7 +16,7 @@ void easyfind(T &arg, int i)
 		std::cout << "Found: " << *it << std::endl;
 	else
 	{
-		throw std::runtime_error("");
+		throw std::runtime_error("Number not found");
 	}
 }
 

@@ -20,7 +20,7 @@ int main()
 	}
 	catch (const std::exception &e)
 	{
-		std::cout << "Number not found" <<std::endl;
+		std::cout << &e <<std::endl;
 	}
 
 	return 0;
