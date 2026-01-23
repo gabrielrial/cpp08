@@ -1,47 +1,57 @@
 #include "MutantStack.hpp"
 
-#include <stack>
-
 int main()
 {
 	MutantStack<int> mstack;
 	mstack.push(5);
 	mstack.push(17);
 
+	std::cout << "===== print top =====" << std::endl;
 	std::cout << mstack.top() << std::endl;
 	mstack.pop();
-	std::cout << "Size: "<< mstack.size() << std::endl;
+
 	mstack.push(3);
 	mstack.push(5);
-	std::cout << "Size: "<< mstack.size() << std::endl;
 	mstack.push(737);
 	mstack.push(0);
+
 	MutantStack<int>::iterator it = mstack.begin();
 	MutantStack<int>::iterator ite = mstack.end();
-	++it;
-	--it;
+
+	std::cout << "===== print list =====" << std::endl;
 	while (it != ite)
 	{
 		std::cout << *it << std::endl;
 		++it;
 	}
-	MutantStack<int> s(mstack);
-	std::cout << "=============================="<< mstack.size() << std::endl;
-	MutantStack<int>::iterator its = s.begin();
-	MutantStack<int>::iterator ites = s.end();
-	while (it != ite)
+
+	// Test copy constructor
+	std::cout << "===== copy constructor =====" << std::endl;
+	MutantStack<int> s1(mstack);
+	MutantStack<int>::iterator it1 = s1.begin();
+	MutantStack<int>::iterator ite1 = s1.end();
+
+	std::cout << "===== print list =====" << std::endl;
+	while (it1 != ite1)
 	{
-		std::cout << *it << std::endl;
-		++it;
+		std::cout << *it1 << std::endl;
+		++it1;
 	}
-	MutantStack<int> s = mstack;
-	std::cout << "=============================="<< mstack.size() << std::endl;
-	MutantStack<int>::iterator its = s.begin();
-	MutantStack<int>::iterator ites = s.end();
-	while (it != ite)
+
+	// Test assignment operator
+	std::cout << "===== assignment operator =====" << std::endl;
+	MutantStack<int> s2;
+	s2 = mstack;
+
+	MutantStack<int>::iterator it2 = s2.begin();
+	MutantStack<int>::iterator ite2 = s2.end();
+
+	std::cout << "===== print list =====" << std::endl;
+	while (it2 != ite2)
 	{
-		std::cout << *it << std::endl;
-		++it;
+		std::cout << *it2 << std::endl;
+		++it2;
 	}
+
 	return 0;
 }
